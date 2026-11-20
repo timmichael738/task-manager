@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    name: Android build, lint & tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Install Android SDK platform
+        run: '"$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --install "platforms;android-37.1" > /dev/null'
+
+      - name: Build, lint and run shared tests
+        run: ./gradlew :androidApp:assembleDebug :androidApp:lintDebug :shared:testAndroidHostTest --stacktrace
+
+      - name: Upload reports
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: android-reports
+          path: |
+            androidApp/build/reports
+            shared/build/reports
+
+  ios:
+    name: iOS tests & app build
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: Run shared tests on the iOS simulator
+        run: ./gradlew :shared:iosSimulatorArm64Test --stacktrace
+
+      - name: Build the iOS app (simulator, unsigned)
+        run: >
+          xcodebuild
+          -project iosApp/iosApp.xcodeproj
+          -target iosApp
+          -sdk iphonesimulator
+          -configuration Debug
+          ARCHS=arm64
+          CODE_SIGNING_ALLOWED=NO
+          build
+
+      - name: Upload reports
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ios-reports
+          path: shared/build/reports

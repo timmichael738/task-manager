@@ -1,0 +1,9 @@
+// Set TEAM_ID to your Apple Developer team ID to run on a physical device.
+// Simulator builds work without it.
+TEAM_ID=
+
+PRODUCT_NAME=TaskManager
+PRODUCT_BUNDLE_IDENTIFIER=com.kotlinapps.taskmanager
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0.0

@@ -1,0 +1,30 @@
+<resources>
+    <!-- Task list -->
+    <string name="tasks_title">My Tasks</string>
+    <string name="add_task">Add task</string>
+    <string name="filter_all">All</string>
+    <string name="filter_active">Active</string>
+    <string name="filter_completed">Completed</string>
+    <string name="clear_completed">Clear completed</string>
+    <string name="empty_all">No tasks yet. Tap + to add one.</string>
+    <string name="empty_active">Nothing left to do. Nice work!</string>
+    <string name="empty_completed">No completed tasks yet.</string>
+    <string name="task_deleted">Task deleted</string>
+    <string name="undo">Undo</string>
+    <string name="delete_task">Delete task</string>
+    <string name="tasks_remaining">%1$d remaining</string>
+
+    <!-- Add / edit -->
+    <string name="new_task">New task</string>
+    <string name="edit_task">Edit task</string>
+    <string name="title_label">Title</string>
+    <string name="description_label">Description (optional)</string>
+    <string name="priority_label">Priority</string>
+    <string name="priority_low">Low</string>
+    <string name="priority_medium">Medium</string>
+    <string name="priority_high">High</string>
+    <string name="save">Save</string>
+    <string name="navigate_up">Navigate up</string>
+    <string name="error_title_required">Title can’t be empty</string>
+    <string name="error_task_not_found">This task no longer exists</string>
+</resources>
